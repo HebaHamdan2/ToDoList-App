@@ -25,6 +25,15 @@ const response=await axios.delete('/api',{
 toast.success(response.data.msg);
 fetchTodos();
    }
+   const updateTodoStatus=async(id:string)=>{
+    const response=await axios.put('/api',{},{
+      params:{
+        mongoId:id
+      }
+    })
+    toast.success(response.data.msg);
+    fetchTodos();
+       }
    useEffect(()=>{
     fetchTodos();
    },[])
@@ -81,7 +90,7 @@ await fetchTodos();
         <tbody>
           
 {todoData.map((item,index)=>{
-  return <Todo key={index} id={index} title={item.title} description={item.description} complete={item.isCompleted} mongoId={item._id} deleteTodo={deleteTodo} />
+  return <Todo key={index} id={index} title={item.title} description={item.description} complete={item.isCompleted} mongoId={item._id} deleteTodo={deleteTodo} updateTodoStatus={updateTodoStatus}/>
 })}
   
         </tbody>
