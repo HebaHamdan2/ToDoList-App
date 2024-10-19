@@ -22,7 +22,7 @@ export async function POST(request:Request){
         await TodoModel.findByIdAndDelete(mongoId);
         return NextResponse.json({msg:"Todo Deleted Successfully"})
 }  
-export async function PUT(request:NextRequest){
+export async function PATCH(request:NextRequest){
     const mongoId=await request.nextUrl.searchParams.get('mongoId');
     await TodoModel.findByIdAndUpdate(mongoId,{
         $set:{

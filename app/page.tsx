@@ -26,7 +26,7 @@ toast.success(response.data.msg);
 fetchTodos();
    }
    const updateTodoStatus=async(id:string)=>{
-    const response=await axios.put('/api',{},{
+    const response=await axios.patch('/api',{},{
       params:{
         mongoId:id
       }
