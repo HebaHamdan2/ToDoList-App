@@ -1,6 +1,15 @@
 import React from 'react'
+interface TodoProps {
+  id: number;
+  title: string;
+  description: string;
+  mongoId: string; 
+  complete: boolean;
+  deleteTodo: (id: string) => void; 
+  updateTodoStatus: (id: string) => void;
+}
 
-const Todo = ({id,title,description,mongoId,complete,deleteTodo,updateTodoStatus}) => {
+const Todo: React.FC<TodoProps> = ({ id, title, description, mongoId, complete, deleteTodo, updateTodoStatus }) => {
   return (
     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
