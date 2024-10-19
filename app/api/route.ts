@@ -1,4 +1,4 @@
-import {  NextResponse } from "next/server";
+import {  NextRequest, NextResponse } from "next/server";
 import TodoModel from "@/lib/models/TodoModel"
 import {ConnectDB} from "@/lib/config/db"
 const LoadDB=async()=>{
@@ -17,4 +17,8 @@ export async function POST(request:Request){
     })
     return NextResponse.json({msg:"Todo Created"})
     }
-    
+    export async function DELETE(request:NextRequest){
+        const mongoId=await request.nextUrl.searchParams.get('mongoId');
+        await TodoModel.findByIdAndDelete(mongoId);
+        return NextResponse.json({msg:"Todo Deleted Successfully"})
+}    
