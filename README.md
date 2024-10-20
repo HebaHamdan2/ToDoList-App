@@ -1,7 +1,7 @@
 # To Do List App
 
 ## Overview
-The To Do List App is a task management application built with **Next.js 14**, enabling users to manage tasks through CRUD (Create, Read, Update, Delete) operations, with data stored in MongoDB.
+The To Do List App is a task management application built with **Next.js 14**. This app allows users to effectively manage their tasks using CRUD (Create, Read, Update, Delete) operations, leveraging the power of MongoDB for data storage.
 
 ## Features
 
