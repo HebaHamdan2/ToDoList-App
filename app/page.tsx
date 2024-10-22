@@ -47,7 +47,6 @@ const onChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
 const name=e.target.name;
 const value=e.target.value;
 setFromData(form=>({...form,[name]:value}));
-console.log(formData)
   }
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
