@@ -30,10 +30,10 @@ cd ToDoList-App
 ```
 npm install
 ```
-3- Set up your MongoDB connection:
-- Create a .env.local file in the root directory and add your MongoDB connection string:
+3- Set up your **MongoDB connection**:
+- Create a **.env.local** file in the root directory and add your MongoDB connection string:
 ```
-MONGODB_URI=your_mongodb_connection_string
+MONGODB_URL=your_mongodb_connection_string
 ```
 4- Run the development server:
 ```
@@ -45,7 +45,7 @@ npm run dev
 
 During the development of this application, I learned how to handle routing in Next.js to connect the API with my application effectively. I applied CRUD operations by utilizing Next.js's file-based routing system, which helped prevent confusion. By following the structure of Next.js folders, I could easily organize my code and manage API routes.
 
-I also relied heavily on the Next.js Documentation, which provided clear guidelines on routing and API integration, enabling me to build a robust application with minimal issues.
+I also relied heavily on the **Next.js Documentation**, which provided clear guidelines on routing and API integration, enabling me to build a robust application with minimal issues.
 
 ## Contributing
 
