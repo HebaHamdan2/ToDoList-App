@@ -1,16 +1,22 @@
 "use client"
 import Todo from "@/Components/Todo";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+interface TodoItem {
+  _id: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+}
 export default function Home() {
   const [formData,setFromData]=useState({
     title:"",
     description:""
   });
-   const[todoData,setTodoData]=useState([]);
+
+   const [todoData, setTodoData] = useState<TodoItem[]>([]);
    const fetchTodos=async()=>{
     const response=await axios.get('/api');
     setTodoData(response.data.todos);
@@ -37,15 +43,14 @@ fetchTodos();
    useEffect(()=>{
     fetchTodos();
    },[])
-  const onChangeHandler=(e)=>{
+const onChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>{
 const name=e.target.name;
 const value=e.target.value;
 setFromData(form=>({...form,[name]:value}));
 console.log(formData)
   }
-  const onSubmitHandler=async(e)=>{
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
   const response=await axios.post('/api',formData)
 toast.success(response.data.msg);
 setFromData({
@@ -53,14 +58,12 @@ setFromData({
   description:""
 });
 await fetchTodos();
-    }catch(error){
- toast.error("Error")
-    }
+    
   }
   return (
    <>
    <ToastContainer theme="dark"/>
-   <form onSubmit={onSubmitHandler} className="flex items-start flex-col gap-2 w-[80%] max-w-[600px] mt-24 px-2 mx-auto ">
+   <form  onSubmit={onSubmitHandler} className="flex items-start flex-col gap-2 w-[80%] max-w-[600px] mt-24 px-2 mx-auto ">
     <input value={formData.title} type="text"  onChange={onChangeHandler} name="title" placeholder="Enter Title"className="px-3 py-2 border-2 w-full "/>
     <textarea value={formData.description} name="description" onChange={onChangeHandler} placeholder="Enter Description" className="px-3 py-2 border-2 w-full"></textarea>
     <button type="submit" className="bg-violet-600 py-3 px-11 text-white">Add To Do</button>
