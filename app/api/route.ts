@@ -16,7 +16,7 @@ const setCorsHeaders = (response:NextResponse) => {
 
 export async function GET() {
     const todos = await TodoModel.find({});
-    const response = NextResponse.json({ todos: todos });
+    const response = NextResponse.json({ todos });
     return setCorsHeaders(response);
 }
 
@@ -31,23 +31,22 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: NextRequest) {
-    const mongoId = await request.nextUrl.searchParams.get('mongoId');
+    const mongoId = request.nextUrl.searchParams.get('mongoId');
     await TodoModel.findByIdAndDelete(mongoId);
     const response = NextResponse.json({ msg: "Todo Deleted Successfully" });
     return setCorsHeaders(response);
 }
 
 export async function PATCH(request: NextRequest) {
-    const mongoId = await request.nextUrl.searchParams.get('mongoId');
+    const mongoId = request.nextUrl.searchParams.get('mongoId');
     await TodoModel.findByIdAndUpdate(mongoId, {
-        $set: {
-            isCompleted: true
-        }
+        $set: { isCompleted: true }
     });
     const response = NextResponse.json({ msg: "Todo Completed Successfully" });
     return setCorsHeaders(response);
 }
 
+// Handle preflight requests for CORS
 export async function OPTIONS() {
     const response = NextResponse.json({});
     return setCorsHeaders(response);
