@@ -1,53 +1,33 @@
-import { NextRequest, NextResponse } from "next/server";
-import TodoModel from "@/lib/models/TodoModel";
-import { ConnectDB } from "@/lib/config/db";
-
-const LoadDB = async () => {
+import {  NextRequest, NextResponse } from "next/server";
+import TodoModel from "@/lib/models/TodoModel"
+import {ConnectDB} from "@/lib/config/db"
+const LoadDB=async()=>{
     await ConnectDB();
-};
-LoadDB();
-
-const setCorsHeaders = (response:NextResponse) => {
-    response.headers.set("Access-Control-Allow-Origin", "*"); 
-    response.headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-    return response;
-};
-
-export async function GET() {
-    const todos = await TodoModel.find({});
-    const response = NextResponse.json({ todos });
-    return setCorsHeaders(response);
 }
-
-export async function POST(request: Request) {
-    const { title, description } = await request.json();
+LoadDB();
+export async function GET(){
+    const todos=await TodoModel.find({});
+return NextResponse.json({todos:todos})
+}
+export async function POST(request:Request){
+    const {title ,description}=await request.json();
     await TodoModel.create({
         title,
         description
+    })
+    return NextResponse.json({msg:"Todo Created"})
+    }
+    export async function DELETE(request:NextRequest){
+        const mongoId=await request.nextUrl.searchParams.get('mongoId');
+        await TodoModel.findByIdAndDelete(mongoId);
+        return NextResponse.json({msg:"Todo Deleted Successfully"})
+}  
+export async function PATCH(request:NextRequest){
+    const mongoId=await request.nextUrl.searchParams.get('mongoId');
+    await TodoModel.findByIdAndUpdate(mongoId,{
+        $set:{
+            isCompleted:true
+        }
     });
-    const response = NextResponse.json({ msg: "Todo Created" });
-    return setCorsHeaders(response);
-}
-
-export async function DELETE(request: NextRequest) {
-    const mongoId = request.nextUrl.searchParams.get('mongoId');
-    await TodoModel.findByIdAndDelete(mongoId);
-    const response = NextResponse.json({ msg: "Todo Deleted Successfully" });
-    return setCorsHeaders(response);
-}
-
-export async function PATCH(request: NextRequest) {
-    const mongoId = request.nextUrl.searchParams.get('mongoId');
-    await TodoModel.findByIdAndUpdate(mongoId, {
-        $set: { isCompleted: true }
-    });
-    const response = NextResponse.json({ msg: "Todo Completed Successfully" });
-    return setCorsHeaders(response);
-}
-
-// Handle preflight requests for CORS
-export async function OPTIONS() {
-    const response = NextResponse.json({});
-    return setCorsHeaders(response);
-}
+    return NextResponse.json({msg:"Todo Completed Successfully"})
+}      
